@@ -49,6 +49,13 @@ let Demo = React.createClass({
   changeSide(side) {
     this.setState({side});
   },
+  toggleResponsivness() {
+    if (this.state.collapseWidth == 99999) {
+      this.setState({collapseWidth: 768});
+    } else {
+      this.setState({collapseWidth: 99999});
+    }
+  },
 
   getItems() {
     let items;
@@ -96,7 +103,7 @@ let Demo = React.createClass({
     if (this.state.side === 'right') {
       jsx = (
         <MenuWrap wait={20} side={this.state.side}>
-          <Menu id={this.state.currentMenu} pageWrapId={'page-wrap'} outerContainerId={'outer-container'} right>
+          <Menu collapseWidth={this.state.collapseWidth} id={this.state.currentMenu} pageWrapId={'page-wrap'} outerContainerId={'outer-container'} right>
             {items}
           </Menu>
         </MenuWrap>
@@ -104,7 +111,7 @@ let Demo = React.createClass({
     } else {
       jsx = (
         <MenuWrap wait={20}>
-          <Menu id={this.state.currentMenu} pageWrapId={'page-wrap'} outerContainerId={'outer-container'}>
+          <Menu collapseWidth={this.state.collapseWidth} id={this.state.currentMenu} pageWrapId={'page-wrap'} outerContainerId={'outer-container'}>
             {items}
           </Menu>
         </MenuWrap>
@@ -117,7 +124,8 @@ let Demo = React.createClass({
   getInitialState() {
     return {
       currentMenu: 'slide',
-      side: 'left'
+      side: 'left',
+      collapseWidth: 99999,
     };
   },
 
@@ -137,8 +145,13 @@ let Demo = React.createClass({
         {this.getMenu()}
         <main id="page-wrap">
           <h1><a href="https://github.com/negomi/react-burger-menu">react-burger-menu</a></h1>
+
+          <h3> Dock menu if screen is wider than 768px </h3>
+          <a className={classNames({'side-button': true, 'right': true, 'left': true, 'active': this.state.collapseWidth === 768})} onClick={this.toggleResponsivness}>{this.state.collapseWidth == 768 ? "ON" : "OFF"}</a>
+          <h3> Change menu side </h3>
           <a className={classNames({'side-button': true, 'left': true, 'active': this.state.side === 'left'})} onClick={this.changeSide.bind(this, 'left')}>Left</a>
           <a className={classNames({'side-button': true, 'right': true, 'active': this.state.side === 'right'})} onClick={this.changeSide.bind(this, 'right')}>Right</a>
+
           <h2 className="description">An off-canvas sidebar React component with a collection of effects and styles using CSS transitions and SVG path animations.</h2>
           <nav className="demo-buttons">
             {buttons}
