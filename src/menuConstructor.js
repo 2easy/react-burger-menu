@@ -98,7 +98,6 @@ export default (styles) => {
       if (inline) {
         output.push(inline);
       }
-      if (el === 'item') { console.log(output); }
       return output;
     },
 

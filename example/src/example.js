@@ -146,7 +146,7 @@ let Demo = React.createClass({
         <main id="page-wrap">
           <h1><a href="https://github.com/negomi/react-burger-menu">react-burger-menu</a></h1>
 
-          <h3> Dock menu if screen is wider than 768px </h3>
+          <h3> Dock menu if screen is wider than 768px (try resizing the browser).</h3>
           <a className={classNames({'side-button': true, 'right': true, 'left': true, 'active': this.state.collapseWidth === 768})} onClick={this.toggleResponsivness}>{this.state.collapseWidth == 768 ? "ON" : "OFF"}</a>
           <h3> Change menu side </h3>
           <a className={classNames({'side-button': true, 'left': true, 'active': this.state.side === 'left'})} onClick={this.changeSide.bind(this, 'left')}>Left</a>

@@ -10,7 +10,7 @@ import menuConstructor from './menuConstructor';
 
 export default (styles) => {
 
-  return Radium(React.createClass({
+  return React.createClass({
 
     propTypes: {
       customBurgerIcon: React.PropTypes.oneOfType([React.PropTypes.element, React.PropTypes.oneOf([false])]),
@@ -38,6 +38,12 @@ export default (styles) => {
         width: 300
       };
     },
+    componentDidMount() {
+      window.addEventListener("resize", e => this.forceUpdate());
+    },
+    componentWillUnmount() {
+      window.removeEventListener("resize", e => this.forceUpdate());
+    },
 
     render() {
       const canCollapse = window.innerWidth < this.props.collapseWidth;
@@ -49,11 +55,7 @@ export default (styles) => {
         /* If menu is docked (can't be closed), we don't animate */
         const staticStyles = {
           pageWrap(isOpen, width, right) {
-            if (right === true) {
-              return { paddingRight: width  + 'px' }
-            } else {
-              return { paddingLeft: width  + 'px' }
-            }
+            return { ["padding"+(right ? "Right" : "Left")]: width  + 'px' }
           }
         }
         const Menu = menuConstructor(staticStyles);
@@ -65,5 +67,5 @@ export default (styles) => {
                   customCrossIcon={false} />
       }
     }
-  }));
+  });
 };
